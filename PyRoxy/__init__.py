@@ -32,7 +32,7 @@ class ProxyType(IntEnum):
     def stringToProxyType(n: str):
         return (
             ProxyType.SOCKS5 if n.lower() == "socks5" else
-            ProxyType.SOCKS4 if n.lower() == "socks4" == 4 else
+            ProxyType.SOCKS4 if n.lower() == "socks4" else
             ProxyType.HTTP
         ) if not (n.isdigit()) else (
             ProxyType.SOCKS5 if int(n) == 5 else
