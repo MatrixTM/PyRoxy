@@ -111,7 +111,8 @@ class Proxy(object):
         with suppress(Exception):
             with self.open_socket() as sock:
                 sock.settimeout(timeout)
-                return sock.connect((url.host, url.port or 80))
+                sock.connect((url.host, url.port or 80))
+                return True
         return False
 
 
