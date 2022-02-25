@@ -108,7 +108,7 @@ class Proxy(object):
     # noinspection PyUnreachableCode
     def check(self, url: Any = "https://httpbin.org/get", timeout=5):
         if not isinstance(url, URL): url = URL(url)
-        with suppress(KeyboardInterrupt):
+        with suppress(Exception):
             with self.open_socket() as sock:
                 sock.settimeout(timeout)
                 return sock.connect((url.host, url.port or 80))
@@ -138,7 +138,7 @@ class ProxyChecker:
     def checkAll(proxies: Collection[Proxy], url: Any = "https://httpbin.org/get", timeout=5, threads=1000):
         with ThreadPoolExecutor(max(min(round(len(proxies) * cpu_count()), threads), 1)) as executor:
             future_to_proxy = {executor.submit(proxy.check, url, timeout): proxy for proxy in proxies}
-            return {future_to_proxy[future] for future in as_completed(future_to_proxy)}
+            return {future_to_proxy[future] for future in as_completed(future_to_proxy) if future.result(0)}
 
 class ProxyUtiles:
     @staticmethod
