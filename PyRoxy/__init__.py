@@ -138,7 +138,7 @@ class ProxyChecker:
     def checkAll(proxies: Collection[Proxy], url: Any = "https://httpbin.org/get", timeout=5, threads=1000):
         with ThreadPoolExecutor(max(min(round(len(proxies) * cpu_count()), threads), 1)) as executor:
             future_to_proxy = {executor.submit(proxy.check, url, timeout): proxy for proxy in proxies}
-            return {(future_to_proxy[future], future) for future in as_completed(future_to_proxy)}
+            return {future_to_proxy[future] for future in as_completed(future_to_proxy) if future.result()}
 
 class ProxyUtiles:
     @staticmethod
