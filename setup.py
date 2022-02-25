@@ -1,8 +1,5 @@
 from setuptools import setup
 
-with open('requirements.txt').open("r+") as f:
-    required = f.read().splitlines()
-
 setup(
     name='PyRoxy',
     version="1.0 BETA",
@@ -11,7 +8,7 @@ setup(
     license='',
     author="MH_ProDev",
     author_email='',
-    install_requires=required,
+    install_requires=["maxminddb>=2.2.0", "requests>=2.27.1", "yarl>=1.7.2", "pysocks>=1.7.1"],
     include_package_data=True,
     description=''
 )
