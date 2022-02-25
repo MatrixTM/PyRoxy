@@ -1,8 +1,9 @@
 from PyRoxy import Proxy, ProxyType, ProxyUtiles, ProxyChecker
 
 if __name__ == '__main__':
-    ps= ProxyUtiles.readIPPortFromFile("test.txt")
-    print(ps)
+    ps= ProxyUtiles.readFromFile("test.txt")
+    for p in ps:
+        print(str(p))
     # pc = ProxyChecker()
     # pc.checkAll(ps)
     # ps = pc.result
