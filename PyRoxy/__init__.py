@@ -1,12 +1,10 @@
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from contextlib import suppress
 from enum import IntEnum, auto
-from functools import partial
 from ipaddress import ip_address
 from multiprocessing import cpu_count
-from multiprocessing.dummy import Pool
 from pathlib import Path
 from socket import socket, SOCK_STREAM, AF_INET, gethostbyname
-from threading import Lock
 from typing import AnyStr, Set, Collection, Any
 
 from socks import socksocket, SOCKS4, SOCKS5, HTTP
@@ -15,7 +13,6 @@ from yarl import URL
 from PyRoxy import GeoIP, Tools
 from PyRoxy.Exceptions import ProxyInvalidHost, ProxyInvalidPort, ProxyParseError
 from PyRoxy.Tools import Patterns
-
 
 __version__ = "1 BETA"
 __auther__ = "MH_ProDev"
@@ -137,22 +134,11 @@ class ProxySocket(socksocket):
 
 
 class ProxyChecker:
-    result: Set[Proxy]
-    out_lock: Lock
-
-    def __init__(self):
-        self.out_lock = Lock()
-        self.result = set()
-
-    def check(self, proxy: Proxy, url: Any = "https://httpbin.org/get", timeout=5):
-        with suppress(Exception), self.out_lock:
-            if proxy.check(url, timeout):
-                self.result.add(proxy)
-
-    def checkAll(self, proxies: Collection[Proxy], url: Any = "https://httpbin.org/get", timeout=5, threads=1000):
-        with Pool(max(round(len(proxies) * cpu_count()), threads)) as pool:
-            pool.map(partial(self.check, url=url, timeout=timeout), proxies)
-
+    @staticmethod
+    def checkAll(proxies: Collection[Proxy], url: Any = "https://httpbin.org/get", timeout=5, threads=1000):
+        with ThreadPoolExecutor(max(min(round(len(proxies) * cpu_count()), threads), 1)) as executor:
+            future_to_proxy = {executor.submit(proxy.check, url, timeout): proxy for proxy in proxies}
+            return {future_to_proxy[future] for future in as_completed(future_to_proxy)}
 
 class ProxyUtiles:
     @staticmethod
