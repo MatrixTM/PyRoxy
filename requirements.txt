@@ -1,0 +1,4 @@
+maxminddb>=2.2.0
+requests>=2.27.1
+yarl>=1.7.2
+pysocks>=1.7.1
