@@ -108,7 +108,7 @@ class Proxy(object):
     # noinspection PyUnreachableCode
     def check(self, url: Any = "https://httpbin.org/get", timeout=5):
         if not isinstance(url, URL): url = URL(url)
-        with suppress(KeyboardInterrupt):
+        with suppress(Exception):
             with self.open_socket() as sock:
                 sock.settimeout(timeout)
                 return sock.connect((url.host, url.port or 80))
