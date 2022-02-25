@@ -30,14 +30,15 @@ class ProxyType(IntEnum):
 
     @staticmethod
     def stringToProxyType(n: str):
-        return ProxyType.HTTP if not (n.isdigit()) else \
-            ProxyType.SOCKS5 if int(n) == 5 else \
-                ProxyType.SOCKS4 if int(n) == 4 else \
-                    ProxyType.HTTP
+        return (
+            ProxyType.SOCKS5 if n.lower() == "socks5" else
+            ProxyType.SOCKS4 if n.lower() == "socks4" == 4 else
+            ProxyType.HTTP
+        ) if not (n.isdigit()) else (
+            ProxyType.SOCKS5 if int(n) == 5 else
+            ProxyType.SOCKS4 if int(n) == 4 else
+            ProxyType.HTTP)
 
-
-PROXY_TYPES = {"SOCKS4": ProxyType.SOCKS4, "SOCKS5": ProxyType.SOCKS5, "HTTP": ProxyType.HTTP, "HTTPS": ProxyType.HTTPS}
-PRINTABLE_PROXY_TYPES = dict(zip(PROXY_TYPES.values(), PROXY_TYPES.keys()))
 
 
 class Proxy(object):
