@@ -1,7 +1,7 @@
 from PyRoxy import ProxyUtiles, ProxyChecker
 
 if __name__ == '__main__':
-    ps= ProxyUtiles.readFromFile("test.txt")
+    ps = ProxyUtiles.readFromFile("test.txt")
     pc = ProxyChecker()
     pc.checkAll(ps)
     ps = pc.result

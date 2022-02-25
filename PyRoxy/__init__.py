@@ -17,6 +17,10 @@ from PyRoxy.Exceptions import ProxyInvalidHost, ProxyInvalidPort, ProxyParseErro
 from PyRoxy.Tools import Patterns
 
 
+__version__ = "1 BETA"
+__auther__ = "MH_ProDev"
+__all__ = ["ProxyUtiles", "ProxyType", "ProxySocket", "ProxyChecker", "Proxy"]
+
 class ProxyType(IntEnum):
     HTTP = auto()
     HTTPS = auto()
@@ -65,7 +69,7 @@ class Proxy(object):
                                                                                 if self.password and self.user else ""))
 
     def __repr__(self):
-        return "<%s Proxy %s:%d>" % (self.type.name, self.host, self.port)
+        return "<%s %s Proxy %s:%d>" % (self.type.name, self.country.upper(), self.host, self.port)
 
     @staticmethod
     def fromString(string: str):
@@ -146,7 +150,7 @@ class ProxyChecker:
                 self.result.add(proxy)
 
     def checkAll(self, proxies: Collection[Proxy], url: Any = "https://httpbin.org/get", timeout=5, threads=1000):
-        with Pool(max(round(len(proxies) / cpu_count()), threads)) as pool:
+        with Pool(max(round(len(proxies) * cpu_count()), threads)) as pool:
             pool.map(partial(self.check, url=url, timeout=timeout), proxies)
 
 

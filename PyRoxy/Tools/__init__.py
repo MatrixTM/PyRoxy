@@ -8,6 +8,7 @@ from struct import pack as data_pack
 from sys import maxsize
 from typing import Callable, Any, List
 
+__all__ = [ "Patterns", "Random"]
 
 class Random:
     latters: List[str] = list(ascii_letters)
