@@ -14,7 +14,7 @@ from PyRoxy import GeoIP, Tools
 from PyRoxy.Exceptions import ProxyInvalidHost, ProxyInvalidPort, ProxyParseError
 from PyRoxy.Tools import Patterns
 
-__version__ = "1 BETA"
+__version__ = "1.0b1"
 __auther__ = "MH_ProDev"
 __all__ = ["ProxyUtiles", "ProxyType", "ProxySocket", "ProxyChecker", "Proxy"]
 
