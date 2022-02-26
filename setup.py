@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='PyRoxy',
-    version="1.0b1",
+    version="1.0b2",
     packages=['PyRoxy', 'PyRoxy.GeoIP', 'PyRoxy.Tools', 'PyRoxy.Exceptions'],
     url='https://github.com/MHProDev/PyRoxy',
     license='',
