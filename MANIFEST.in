@@ -1,3 +1,3 @@
-include LICENSE
+include LICENSE.md
 recursive-include PyRoxy.GeoIP GeoLite2-Country.mmdb
 recursive-include PyRoxy.GeoIP *.txt
