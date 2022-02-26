@@ -103,7 +103,7 @@ class Proxy(object):
         return sock
 
     def asRequest(self):
-        return {"http": self.__str__()}
+        return {"http": self.__str__(), "https": self.__str__().replace("http://", "https://")}
 
     # noinspection PyUnreachableCode
     def check(self, url: Any = "https://httpbin.org/get", timeout=5):
