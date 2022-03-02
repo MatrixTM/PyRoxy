@@ -66,7 +66,7 @@ class Proxy(object):
 
     def __str__(self):
         return "%s://%s:%d%s" % (self.type.name.lower(), self.host, self.port,
-                                 ("%s:%s" % (self.user, self.password)
+                                 (":%s:%s" % (self.user, self.password)
                                   if self.password and self.user else ""))
 
     def __repr__(self):
