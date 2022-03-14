@@ -204,7 +204,8 @@ class ProxyUtiles:
         for pr in proxies:
             pr = Patterns.IPPort.search(pr)
             if not pr: continue
-            resu.add(Proxy(pr.group(1), int(pr.group(2)), ptype))
+            with suppress(Exception):
+                resu.add(Proxy(pr.group(1), int(pr.group(2)), ptype))
         return resu
 
     @staticmethod
