@@ -15,7 +15,8 @@ class Random:
     latters: List[str] = list(ascii_letters)
     rand_str: Callable[[int], str] = lambda length=16: ''.join(
         Random.rand_choice(*Random.latters) for _ in range(length))
-    rand_char: Callable[[int], chr] = lambda length=16: chr((Random.rand_int(0, 1000)) for _ in range(length))
+    rand_char: Callable[[int], chr] = lambda length=16: "".join(
+        [chr(Random.rand_int(0, 1000)) for _ in range(length)])
     rand_ipv4: Callable[[], str] = lambda: inet_ntoa(
         data_pack('>I', Random.rand_int(1, 0xffffffff)))
     rand_ipv6: Callable[[], str] = lambda: inet_ntop(
